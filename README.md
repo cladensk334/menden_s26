@@ -60,4 +60,4 @@ main (mit Ordnerstrukur), temperatur , luftdruck, wind (hier alle Unterteilt in 
 | 05705 | 19470101 | 20260502 | 268 | 49.7704 | 9.9576 | Würzburg | Bayern | Frei |
 | 05707 | 18800101 | 19530131 | 175 | 49.7995 | 9.9280 | Würzburg (Physikalisches-Institut) | Bayern | Frei |
 
--> Wir entscheiden uns für "Würzburg": Daten gehen bis 03.05.2026 und sind nicht historisch
+-> Wir entscheiden uns für "Würzburg": Daten gehen bis 03.05.2026 und sind teil historisch
