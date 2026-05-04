@@ -23,6 +23,15 @@ main (mit Ordnerstrukur), temperatur , luftdruck, dampfdruck (hier alle Untertei
 5. Vor einem upload muss die aktuelle Version von GitHub runtergeladen werden und diese angepasst werden, um Konfikte zu vermeiden
 6. Code (oder andere nicht eindeutige Datein) sollten mit Kommentar hochgeladen werden um verwirrung zu vermeiden
 
+**Was macht ein professionelles Repo aus ?:**
+- so aufgebaut, dass jemand Fremdes es klonen, verstehen und sofort ausführen kann ohne Rückfragen zu haben
+- aussagekräftiges README
+- saubere Ordnerstruktur
+- .gitignore damit keine unnötigen Dateien getrackt werden (können wir hier nicht machen
+- requirements.txt damit die Umgebung reproduzierbar ist
+- Commits die eine nachvollziehbare Geschichte des Projekts erzählen 
+
+
 
 **Temperatur Startionsdaten:** 
 | Stations_id | von_datum | bis_datum | Stationshoehe | geoBreite | geoLaenge | Stationsname | Bundesland | Abgabe |
