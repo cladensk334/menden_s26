@@ -47,9 +47,8 @@ main (mit Ordnerstrukur), temperatur , luftdruck, wind (hier alle Unterteilt in 
 - saubere Ordnerstruktur
 - .gitignore damit keine unnötigen Dateien getrackt werden (können wir hier nicht machen
 - requirements.txt damit die Umgebung reproduzierbar ist
-- Commits die eine nachvollziehbare Geschichte des Projekts erzählen 
-
-
+- Commits die eine nachvollziehbare Geschichte des Projekts erzählen
+- Hier findet man weitere Ideen: https://github.com/orgs/community/discussions/88715
 
 **Temperatur Startionsdaten:** 
 | Stations_id | von_datum | bis_datum | Stationshoehe | geoBreite | geoLaenge | Stationsname | Bundesland | Abgabe |
