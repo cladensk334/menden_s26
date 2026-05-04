@@ -1,0 +1,46 @@
+Ordnerstrukur: 
+├── data/
+│   ├── raw/            ← Originaldaten, nie anfassen
+│   └── processed/      ← transformierte Daten
+├── notebooks/          ← ein Notebook pro Person
+├── src/                ← gemeinsame Python-Funktionen
+├── results/            ← Plots und Modell-Outputs
+├── requirements.txt
+├── .gitignore
+└── README.md
+
+Branchstrukur: 
+main — nur sauberer, fertiger Code
+dev — Zwischenstand der Gruppe
+einzel Branches 
+
+README muss enthalten:
+Projektbeschreibung, Gruppenname, Setup-Anleitung (klonen → venv → requirements installieren), kurze Erklärung was in welchem Ordner liegt.
+
+.gitignore — diese Einträge sind für Python-Projekte wichtig:
+__pycache__/
+.ipynb_checkpoints/
+venv/
+.env
+*.pyc
+
+requirements.txt — relevante Pakete für euer Projekt:
+pandas
+numpy
+matplotlib
+statsmodels
+pmdarima
+jupyter
+
+Code-Dokumentation — jede Funktion in src/ bekommt einen kurzen Docstring:
+pythondef differenzieren(reihe, d=1):
+    """
+    Differenziert eine Zeitreihe d-mal.
+    
+    Parameter:
+        reihe: pd.Series
+        d: Anzahl der Differenzierungen
+    
+    Rückgabe:
+        pd.Series
+    ""
