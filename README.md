@@ -17,11 +17,11 @@ Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/
 
 **Termin Übersicht:**
 
-**| Teil | Datum | Beschreibung |**
+**| Teil | Beschreibung |**
 |------|-------------|
-| **Teil 1** | 04.05.26 |**Professionelles Git Repository** — Ordnerstruktur, Branching-Strategie, Commit-Konventionen, README, `.gitignore` und `requirements.txt` |
-| **Teil 2** | 11.05.26 |**Univariate Zeitreihenanalyse (ARIMA)** — Stationaritätstests (ADF & KPSS), ACF/PACF Analyse, Modellselektion nach Box-Jenkins, Residualdiagnostik, Prognose für 10 Perioden |
-| **Teil 3** | 18.05.26 | **Multivariate Zeitreihenanalyse** — Automatisierte Pipeline über alle Zeitreihen, Evaluationsmetriken (RMSE, MAE, MAPE), Auswahl des besten Modells, Prognose für alle Zeitreihen |
+| **Teil 1** |**Professionelles Git Repository** — Ordnerstruktur, Branching-Strategie, Commit-Konventionen, README, `.gitignore` und `requirements.txt` |
+| **Teil 2** |**Univariate Zeitreihenanalyse (ARIMA)** — Stationaritätstests (ADF & KPSS), ACF/PACF Analyse, Modellselektion nach Box-Jenkins, Residualdiagnostik, Prognose für 10 Perioden |
+| **Teil 3** |**Multivariate Zeitreihenanalyse** — Automatisierte Pipeline über alle Zeitreihen, Evaluationsmetriken (RMSE, MAE, MAPE), Auswahl des besten Modells, Prognose für alle Zeitreihen |
 
 
 **Aufgabenverteilung** 
@@ -29,8 +29,8 @@ Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/
 | Teammitglied | Zeitreihe | Parameter | Einheit |
 |--------------|-----------|-----------|---------|
 | **Kenia** | Wind | Windgeschwindigkeit (`FM`) | m/s |
-| **Partner 1** | Luftdruck | Luftdruck (`PM`) | hPa |
-| **Partner 2** | Temperatur | Tagesmitteltemperatur (`TMK`) | °C |
+| **Jonas** | Luftdruck | Luftdruck (`PM`) | hPa |
+| **Clara** | Temperatur | Tagesmitteltemperatur (`TMK`) | °C |
 
 
 **Welche Dateien gibt es?**
