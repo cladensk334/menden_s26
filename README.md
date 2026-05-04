@@ -19,7 +19,7 @@ aufgabenstellung: unsere Project eckdaten
 Clara -  Temperatur, Jonas - Luftdruck, Kenia - Wind
 
 **Branches:**
-main (mit Ordnerstrukur), temperatur , luftdruck, dampfdruck (hier alle Unterteilt in die jeweiligen Arbeitsschritte), neuner Branch der die Modelle der drei einzelnden  zusammenführt und jeweils die besten schritte nimmt 
+main (mit Ordnerstrukur), temperatur , luftdruck, wind (hier alle Unterteilt in die jeweiligen Arbeitsschritte), neuner Branch der die Modelle der drei einzelnden  zusammenführt und jeweils die besten schritte nimmt 
 
 **Regeln:**
 1. Jeder Uplaod wird direkt in den richtigen Ordner gesteckt (hier ist die Strucktur Daten(raw/processed), notebooks
