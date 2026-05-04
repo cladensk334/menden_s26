@@ -6,6 +6,13 @@ Im Rahmen der univariaten Zeitreihenanalyse wird für jede der drei Zeitreihen m
 Im Rahmen der multivariaten Analyse wird eine automatisierte Pipeline entwickelt, die verschiedene Modelle über alle drei Zeitreihen evaluiert, das jeweils beste Modell anhand geeigneter Metriken auswählt und Prognosen für den gesamten Datensatz erstellt.
 Alle Ergebnisse werden in einem professionellen Git-Repository dokumentiert und so aufbereitet, dass sie für Dritte nachvollziehbar und reproduzierbar sind.
 
+## Termin Übersicht:
+
+| Termin | Beschreibung |
+|------|-------------|
+| **Termin 1** | **Professionelles Git Repository** — Ordnerstruktur, Branching-Strategie, Commit-Konventionen, README, `.gitignore` und `requirements.txt` |
+| **Termin 2** | **Univariate Zeitreihenanalyse (ARIMA)** — Stationaritätstests (ADF & KPSS), ACF/PACF Analyse, Modellselektion nach Box-Jenkins, Residualdiagnostik, Prognose für 10 Perioden |
+| **Termin 3** | **Multivariate Zeitreihenanalyse** — Automatisierte Pipeline über alle Zeitreihen, Evaluationsmetriken (RMSE, MAE, MAPE), Auswahl des besten Modells, Prognose für alle Zeitreihen |
 
 ## Projekt Überblick
 Wir analysieren Wetterdaten des Deutschen Wetterdienstes (DWD).
@@ -14,14 +21,6 @@ Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/
 **Kurs:** Zeitreiheanalyse  
 **Gruppen Mitglieder:** Clara Denecke, Jonas Müller, Kenia Eguez  
 **Semester:** S26
-
-**Termin Übersicht:**
-
-| Teil | Beschreibung |
-|------|-------------|
-| **Teil 1** | **Professionelles Git Repository** — Ordnerstruktur, Branching-Strategie, Commit-Konventionen, README, `.gitignore` und `requirements.txt` |
-| **Teil 2** | **Univariate Zeitreihenanalyse (ARIMA)** — Stationaritätstests (ADF & KPSS), ACF/PACF Analyse, Modellselektion nach Box-Jenkins, Residualdiagnostik, Prognose für 10 Perioden |
-| **Teil 3** | **Multivariate Zeitreihenanalyse** — Automatisierte Pipeline über alle Zeitreihen, Evaluationsmetriken (RMSE, MAE, MAPE), Auswahl des besten Modells, Prognose für alle Zeitreihen |
 
 
 **Welche Dateien gibt es?**
