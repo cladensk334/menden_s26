@@ -13,11 +13,11 @@ Ordnerstrukur:
 
 Branchstrukur: 
 main — nur sauberer, fertiger Code
-dev — Zwischenstand der Gruppe
-einzel Branches
+dev — Zwischenstand der Gruppe +
+einzel Branches +
 
 Nach vorstelleung: 
-- Erste Durchführung noch ausführlicher (aufgabenstellung in zusammenfassung) + ziel 
+- Erste Durchführung noch ausführlicher (aufgabenstellung in zusammenfassung) + ziel +
 - Branches: dev, dann Datenvisualisierung ect mit temperatur als unterpunkt
 - Cleanes Respiratory (neu ?) um einmal alles clean zu halten ? 
 - nächste woche reflektion wie das geklappt hat (hier anfangen mit commit commentaren -> audführlicher ect) 
