@@ -6,6 +6,7 @@ Im Rahmen der univariaten Zeitreihenanalyse wird für jede der drei Zeitreihen m
 Im Rahmen der multivariaten Analyse wird eine automatisierte Pipeline entwickelt, die verschiedene Modelle über alle drei Zeitreihen evaluiert, das jeweils beste Modell anhand geeigneter Metriken auswählt und Prognosen für den gesamten Datensatz erstellt.
 Alle Ergebnisse werden in einem professionellen Git-Repository dokumentiert und so aufbereitet, dass sie für Dritte nachvollziehbar und reproduzierbar sind.
 
+
 ## Projekt Überblick
 Wir analysieren Wetterdaten des Deutschen Wetterdienstes (DWD).
 Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/leistungen/cdc/cdc_ueberblick-klimadaten.html
@@ -13,6 +14,24 @@ Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/
 **Kurs:** Zeitreiheanalyse  
 **Gruppen Mitglieder:** Clara Denecke, Jonas Müller, Kenia Eguez  
 **Semester:** S26
+
+**Termin Übersicht:**
+
+**| Teil | Datum | Beschreibung |**
+|------|-------------|
+| **Teil 1** | 04.05.26 |**Professionelles Git Repository** — Ordnerstruktur, Branching-Strategie, Commit-Konventionen, README, `.gitignore` und `requirements.txt` |
+| **Teil 2** | 11.05.26 |**Univariate Zeitreihenanalyse (ARIMA)** — Stationaritätstests (ADF & KPSS), ACF/PACF Analyse, Modellselektion nach Box-Jenkins, Residualdiagnostik, Prognose für 10 Perioden |
+| **Teil 3** | 18.05.26 | **Multivariate Zeitreihenanalyse** — Automatisierte Pipeline über alle Zeitreihen, Evaluationsmetriken (RMSE, MAE, MAPE), Auswahl des besten Modells, Prognose für alle Zeitreihen |
+
+
+**Aufgabenverteilung** 
+
+| Teammitglied | Zeitreihe | Parameter | Einheit |
+|--------------|-----------|-----------|---------|
+| **Kenia** | Wind | Windgeschwindigkeit (`FM`) | m/s |
+| **Partner 1** | Luftdruck | Luftdruck (`PM`) | hPa |
+| **Partner 2** | Temperatur | Tagesmitteltemperatur (`TMK`) | °C |
+
 
 **Welche Dateien gibt es?**
 data (order): Rohdaten und bereinigte Daten beinhaltet, ToDo: was noch gemacht werden muss, src: notwendige Python Funktionen, Aufgabenstellung: unsere Project eckdaten 
@@ -30,8 +49,14 @@ data (order): Rohdaten und bereinigte Daten beinhaltet, ToDo: was noch gemacht w
   bashcd IhrRepository
 
 
-**Datenaufteilung:**
-Clara -  Temperatur, Jonas - Luftdruck, Kenia - Wind
+**Aufgabenverteilung:**
+
+| Teammitglied | Zeitreihe | Parameter | Einheit |
+|--------------|-----------|-----------|---------|
+| **Kenia** | Wind | Windgeschwindigkeit (`FM`) | m/s |
+| **Partner 1** | Luftdruck | Luftdruck (`PM`) | hPa |
+| **Partner 2** | Temperatur | Tagesmitteltemperatur (`TMK`) | °C |
+
 
 **Branches:**
 main (mit Ordnerstrukur), temperatur , luftdruck, wind (hier alle Unterteilt in die jeweiligen Arbeitsschritte), neuner Branch der die Modelle der drei einzelnen  zusammenführt und jeweils die besten Schritte nimmt 
