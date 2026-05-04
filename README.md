@@ -24,15 +24,6 @@ Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/
 | **Teil 3** | **Multivariate Zeitreihenanalyse** — Automatisierte Pipeline über alle Zeitreihen, Evaluationsmetriken (RMSE, MAE, MAPE), Auswahl des besten Modells, Prognose für alle Zeitreihen |
 
 
-**Aufgabenverteilung** 
-
-| Teammitglied | Zeitreihe | Parameter | Einheit |
-|--------------|-----------|-----------|---------|
-| **Kenia** | Wind | Windgeschwindigkeit (`FM`) | m/s |
-| **Jonas** | Luftdruck | Luftdruck (`PM`) | hPa |
-| **Clara** | Temperatur | Tagesmitteltemperatur (`TMK`) | °C |
-
-
 **Welche Dateien gibt es?**
 data (order): Rohdaten und bereinigte Daten beinhaltet, ToDo: was noch gemacht werden muss, src: notwendige Python Funktionen, Aufgabenstellung: unsere Project eckdaten 
 
@@ -47,15 +38,6 @@ data (order): Rohdaten und bereinigte Daten beinhaltet, ToDo: was noch gemacht w
   bashgit clone git@github.com:IhrBenutzername/IhrRepository.git
 6. Danach in den Ordner wechseln:
   bashcd IhrRepository
-
-
-**Aufgabenverteilung:**
-
-| Teammitglied | Zeitreihe | Parameter | Einheit |
-|--------------|-----------|-----------|---------|
-| **Kenia** | Wind | Windgeschwindigkeit (`FM`) | m/s |
-| **Partner 1** | Luftdruck | Luftdruck (`PM`) | hPa |
-| **Partner 2** | Temperatur | Tagesmitteltemperatur (`TMK`) | °C |
 
 
 **Branches:**
@@ -86,3 +68,12 @@ main (mit Ordnerstrukur), temperatur , luftdruck, wind (hier alle Unterteilt in 
 | 05707 | 18800101 | 19530131 | 175 | 49.7995 | 9.9280 | Würzburg (Physikalisches-Institut) | Bayern | Frei |
 
 -> Wir entscheiden uns für "Würzburg": Daten gehen bis 03.05.2026 und sind teil historisch
+
+**Aufgabenverteilung:** 
+
+| Teammitglied | Zeitreihe | Parameter | Einheit |
+|--------------|-----------|-----------|---------|
+| **Kenia** | Wind | Windgeschwindigkeit (`FM`) | m/s |
+| **Jonas** | Luftdruck | Luftdruck (`PM`) | hPa |
+| **Clara** | Temperatur | Tagesmitteltemperatur (`TMK`) | °C |
+
