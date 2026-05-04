@@ -1,5 +1,11 @@
 # Menden_S26 - Zeitreiheanalyse 
 
+## Ziel dieses Projekts
+Ziel dieses Projekts ist die Analyse von Wetterzeitreihen der DWD-Wetterstation Würzburg (Stations-ID: 05705) mithilfe statistischer Zeitreihenmodelle. Die Daten werden automatisiert über den CDC Open Data Server des Deutschen Wetterdienstes bezogen und umfassen tägliche Messungen von Windgeschwindigkeit, Luftdruck und Temperatur.
+Im Rahmen der univariaten Zeitreihenanalyse wird für jede der drei Zeitreihen mithilfe der Box-Jenkins-Methode ein geeignetes ARIMA-Modell identifiziert, geschätzt und validiert. Dabei werden Stationaritätstests durchgeführt, ACF und PACF analysiert sowie Residualdiagnostiken vorgenommen. Abschließend werden Prognosen für die nächsten zehn Perioden inklusive Konfidenzintervallen berechnet.
+Im Rahmen der multivariaten Analyse wird eine automatisierte Pipeline entwickelt, die verschiedene Modelle über alle drei Zeitreihen evaluiert, das jeweils beste Modell anhand geeigneter Metriken auswählt und Prognosen für den gesamten Datensatz erstellt.
+Alle Ergebnisse werden in einem professionellen Git-Repository dokumentiert und so aufbereitet, dass sie für Dritte nachvollziehbar und reproduzierbar sind.
+
 ## Projekt Überblick
 Wir analysieren Wetterdaten des Deutschen Wetterdienstes (DWD).
 Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/leistungen/cdc/cdc_ueberblick-klimadaten.html
