@@ -14,7 +14,7 @@ Alle Ergebnisse werden in einem professionellen Git-Repository dokumentiert und 
 | **Termin 2** | **Univariate Zeitreihenanalyse (ARIMA)** — Stationaritätstests (ADF & KPSS), ACF/PACF Analyse, Modellselektion nach Box-Jenkins, Residualdiagnostik, Prognose für 10 Perioden |
 | **Termin 3** | **Multivariate Zeitreihenanalyse** — Automatisierte Pipeline über alle Zeitreihen, Evaluationsmetriken (RMSE, MAE, MAPE), Auswahl des besten Modells, Prognose für alle Zeitreihen |
 
-## Projekt Überblick
+## Überblick
 Wir analysieren Wetterdaten des Deutschen Wetterdienstes (DWD).
 Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/leistungen/cdc/cdc_ueberblick-klimadaten.html
 
