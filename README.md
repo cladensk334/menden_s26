@@ -1,8 +1,9 @@
 # Menden_S26 - Zeitreiheanalyse 
 
 ## Project Overview
-Wir analysieren Wetter Daten aus der Website des Deutschen Wetter Dienstes  .
+Wir analysieren Wetterdaten des Deutschen Wetterdienstes (DWD).
+Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de
 
-**Kurs:** [Zeitreiheanalyse]  
+**Kurs:** Zeitreiheanalyse  
 **Gruppen Mitglieder:** Clara Denecke, Jonas Mueller, Kenia Eguez  
 **Semester:** S26
