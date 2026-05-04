@@ -13,7 +13,16 @@ Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/
 Clara -  Temperatur, Jonas - Luftdruck, Kenia - Dampfdruck und relative feuchte 
 
 **Branches:**
-main, temperatur, luftdruck, dampfdruck 
+main (mit Ordnerstrukur), temperatur , luftdruck, dampfdruck (hier alle Unterteilt in die jeweiligen Arbeitsschritte), neuner Branch der die Modelle der drei einzelnden  zusammenführt und jeweils die besten schritte nimmt 
+
+**Regeln:**
+1. Jeder Uplaod wird direkt in den richtigen Ordner gesteckt (hier ist die Strucktur Daten(raw/processed), notebooks
+2. Whatsapp Gruppe zur Kommunikation plus 1-2 Meetings pro Woche nach Aufgabenverteilung
+3. Bei Struktur arbeiten (Bsp neuer Branch/Ordner/ ect) gegenseiting Informieren um Fehler zu vermeiden
+4. Der Main Branch wird nur am Anfang (zb Upload der Daten, Read me) benutzt, danach der spezifische Aufgaben Branch
+5. Vor einem upload muss die aktuelle Version von GitHub runtergeladen werden und diese angepasst werden, um Konfikte zu vermeiden
+6. Code (oder andere nicht eindeutige Datein) sollten mit Kommentar hochgeladen werden um verwirrung zu vermeiden
+
 
 **Temperatur Startionsdaten:** 
 | Stations_id | von_datum | bis_datum | Stationshoehe | geoBreite | geoLaenge | Stationsname | Bundesland | Abgabe |
