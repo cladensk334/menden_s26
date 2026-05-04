@@ -8,11 +8,11 @@ Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/
 **Gruppen Mitglieder:** Clara Denecke, Jonas Müller, Kenia Eguez  
 **Semester:** S26
 
-**Welche Datein gibt es?**
-data (order): Rohdaten und Bereigite Daten beinhaltet 
+**Welche Dateien gibt es?**
+data (order): Rohdaten und bereinigte Daten beinhaltet 
 ToDo: was noch gemacht werden muss 
-src: notwendige Python funktionen 
-aufgabenstellung: unsere Project eckdaten 
+src: notwendige Python Funktionen 
+Aufgabenstellung: unsere Project eckdaten 
 
 **Wie klont man dieses Respiratory lokal ?**
 
@@ -31,7 +31,7 @@ aufgabenstellung: unsere Project eckdaten
 Clara -  Temperatur, Jonas - Luftdruck, Kenia - Wind
 
 **Branches:**
-main (mit Ordnerstrukur), temperatur , luftdruck, wind (hier alle Unterteilt in die jeweiligen Arbeitsschritte), neuner Branch der die Modelle der drei einzelnden  zusammenführt und jeweils die besten schritte nimmt 
+main (mit Ordnerstrukur), temperatur , luftdruck, wind (hier alle Unterteilt in die jeweiligen Arbeitsschritte), neuner Branch der die Modelle der drei einzelnen  zusammenführt und jeweils die besten Schritte nimmt 
 
 **Regeln:**
 1. Jeder Uplaod wird direkt in den richtigen Ordner gesteckt (hier ist die Strucktur Daten(raw/processed), notebooks
