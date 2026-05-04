@@ -1,0 +1,17 @@
+Stations_ID;Stations_Name;Parameter;Von_Datum;Bis_Datum;Gesamt_Fehlwerte;Beschreibung;eor;                                                                                                              
+5705;Würzburg;TT_TER;31.10.2024;03.05.2026;11;Gesamt_Messzeitraum;eor;                                                                                                                                  
+5705;Würzburg;RF_TER;31.10.2024;03.05.2026;21;Gesamt_Messzeitraum;eor;                                                                                                                                  
+Stations_ID;Stations_Name;Parameter;Von_Datum;Bis_Datum;Anzahl_Fehlwerte;Beschreibung;eor;                                                                                                              
+5705;Würzburg;TT_TER;01.02.2026-19:00;02.02.2026-11:00;2;;eor;                                                                                                                                          
+5705;Würzburg;TT_TER;26.02.2026-13:00;27.02.2026-11:00;3;;eor;                                                                                                                                          
+5705;Würzburg;TT_TER;02.03.2026-13:00;03.03.2026-11:00;3;;eor;                                                                                                                                          
+5705;Würzburg;TT_TER;04.03.2026-13:00;05.03.2026-11:00;3;;eor;                                                                                                                                          
+5705;Würzburg;RF_TER;14.06.2025-13:00;16.06.2025-11:00;5;;eor;                                                                                                                                          
+5705;Würzburg;RF_TER;17.06.2025-07:00;18.06.2025-05:00;2;;eor;                                                                                                                                          
+5705;Würzburg;RF_TER;21.06.2025-13:00;22.06.2025-11:00;2;;eor;                                                                                                                                          
+5705;Würzburg;RF_TER;22.06.2025-13:00;23.06.2025-05:00;1;;eor;                                                                                                                                          
+5705;Würzburg;RF_TER;01.02.2026-19:00;02.02.2026-11:00;2;;eor;                                                                                                                                          
+5705;Würzburg;RF_TER;26.02.2026-13:00;27.02.2026-11:00;3;;eor;                                                                                                                                          
+5705;Würzburg;RF_TER;02.03.2026-13:00;03.03.2026-11:00;3;;eor;                                                                                                                                          
+5705;Würzburg;RF_TER;04.03.2026-13:00;05.03.2026-11:00;3;;eor;                                                                                                                                          
+generiert: 04.05.2026 --  Deutscher Wetterdienst  --                                                                                                                                                    
