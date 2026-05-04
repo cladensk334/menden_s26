@@ -1,0 +1,4 @@
+Stations_ID;Stationsname;Geo. Laenge [Grad];Geo. Breite [Grad];Stationshoehe [m];Geberhoehe ueber Grund [m];Von_Datum;Bis_Datum;Geraetetyp Name;Messverfahren;eor;
+5705;Würzburg;9.96;49.77;268;2;19921022;20060606;PT 100 (Luft);Temperaturmessung, elektr.;eor;
+5705;Würzburg;9.96;49.77;268;2;20060607;20260503;PT 100 (Luft);Temperaturmessung, elektr.;eor;
+generiert: 04.05.2026 --  Deutscher Wetterdienst  --
