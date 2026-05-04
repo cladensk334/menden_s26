@@ -9,10 +9,7 @@ Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/
 **Semester:** S26
 
 **Welche Dateien gibt es?**
-data (order): Rohdaten und bereinigte Daten beinhaltet 
-ToDo: was noch gemacht werden muss 
-src: notwendige Python Funktionen 
-Aufgabenstellung: unsere Project eckdaten 
+data (order): Rohdaten und bereinigte Daten beinhaltet, ToDo: was noch gemacht werden muss, src: notwendige Python Funktionen, Aufgabenstellung: unsere Project eckdaten 
 
 **Wie klont man dieses Respiratory lokal ?**
 
