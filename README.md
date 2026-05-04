@@ -16,7 +16,7 @@ aufgabenstellung: unsere Project eckdaten
 
 
 **Datenaufteilung:**
-Clara -  Temperatur, Jonas - Luftdruck, Kenia - Dampfdruck und relative feuchte 
+Clara -  Temperatur, Jonas - Luftdruck, Kenia - Wind
 
 **Branches:**
 main (mit Ordnerstrukur), temperatur , luftdruck, dampfdruck (hier alle Unterteilt in die jeweiligen Arbeitsschritte), neuner Branch der die Modelle der drei einzelnden  zusammenführt und jeweils die besten schritte nimmt 
@@ -46,4 +46,4 @@ main (mit Ordnerstrukur), temperatur , luftdruck, dampfdruck (hier alle Untertei
 | 05705 | 19470101 | 20260502 | 268 | 49.7704 | 9.9576 | Würzburg | Bayern | Frei |
 | 05707 | 18800101 | 19530131 | 175 | 49.7995 | 9.9280 | Würzburg (Physikalisches-Institut) | Bayern | Frei |
 
--> Wir entscheiden uns für "Würzburg": Daten gehen bis 2026 und sind nicht historisch
+-> Wir entscheiden uns für "Würzburg": Daten gehen bis 03.05.2026 und sind nicht historisch
