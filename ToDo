@@ -1,3 +1,5 @@
+Datenimport, Visualisierung, Datenbereinigung, Descriptive Analyse
+
 Ordnerstrukur: 
 ├── data/
 │   ├── raw/            ← Originaldaten, nie anfassen
