@@ -8,6 +8,12 @@ Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/
 **Gruppen Mitglieder:** Clara Denecke, Jonas Müller, Kenia Eguez  
 **Semester:** S26
 
+**Welche Datein gibt es?**
+data (order): Rohdaten und Bereigite Daten beinhaltet 
+ToDo: was noch gemacht werden muss 
+src: notwendige Python funktionen 
+aufgabenstellung: unsere Project eckdaten 
+
 
 **Datenaufteilung:**
 Clara -  Temperatur, Jonas - Luftdruck, Kenia - Dampfdruck und relative feuchte 
