@@ -61,3 +61,27 @@ main (mit Ordnerstrukur), temperatur , luftdruck, wind (hier alle Unterteilt in 
 | 05707 | 18800101 | 19530131 | 175 | 49.7995 | 9.9280 | Würzburg (Physikalisches-Institut) | Bayern | Frei |
 
 -> Wir entscheiden uns für "Würzburg": Daten gehen bis 03.05.2026 und sind teil historisch
+
+## Rohdaten – Spaltenbeschreibung
+
+| Spalte | Bedeutung | Einheit | Verwendet von |
+|--------|-----------|---------|---------------|
+| `STATIONS_ID` | Stations-ID | — | — |
+| `MESS_DATUM` | Messdatum (YYYYMMDD) | — | Alle |
+| `QN_3` | Qualitätsniveau Wind | — | — |
+| `FX` | Windspitze – maximale Windgeschwindigkeit | m/s | **Kenia** |
+| `FM` | Windgeschwindigkeit – Tagesmittel | m/s | **Kenia** |
+| `QN_4` | Qualitätsniveau alle anderen Parameter | — | — |
+| `RSK` | Niederschlagshöhe | mm | — |
+| `RSKF` | Niederschlagsform (Code) | — | — |
+| `SDK` | Sonnenscheindauer | h | — |
+| `SHK_TAG` | Schneedeckenhöhe | cm | — |
+| `NM` | Bedeckungsgrad | Achtel (0–8) | — |
+| `VPM` | Dampfdruck | hPa | — |
+| `PM` | Luftdruck auf Stationshöhe | hPa | **Partner 1** |
+| `TMK` | Tagesmitteltemperatur | °C | **Partner 2** |
+| `UPM` | Relative Feuchte | % | — |
+| `TXK` | Tagesmaximumtemperatur | °C | **Partner 2** |
+| `TNK` | Tagesminimumtemperatur | °C | **Partner 2** |
+| `TGK` | Minimumtemperatur Erdboden | °C | — |
+| `eor` | End of Record – DWD Marker | — | — |
