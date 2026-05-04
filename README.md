@@ -78,10 +78,10 @@ main (mit Ordnerstrukur), temperatur , luftdruck, wind (hier alle Unterteilt in 
 | `SHK_TAG` | Schneedeckenhöhe | cm | — |
 | `NM` | Bedeckungsgrad | Achtel (0–8) | — |
 | `VPM` | Dampfdruck | hPa | — |
-| `PM` | Luftdruck auf Stationshöhe | hPa | **Partner 1** |
-| `TMK` | Tagesmitteltemperatur | °C | **Partner 2** |
+| `PM` | Luftdruck auf Stationshöhe | hPa | **Jonas** |
+| `TMK` | Tagesmitteltemperatur | °C | **Clara** |
 | `UPM` | Relative Feuchte | % | — |
-| `TXK` | Tagesmaximumtemperatur | °C | **Partner 2** |
-| `TNK` | Tagesminimumtemperatur | °C | **Partner 2** |
+| `TXK` | Tagesmaximumtemperatur | °C | **Clara** |
+| `TNK` | Tagesminimumtemperatur | °C | **Clara** |
 | `TGK` | Minimumtemperatur Erdboden | °C | — |
 | `eor` | End of Record – DWD Marker | — | — |
