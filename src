@@ -7,3 +7,11 @@ matplotlib
 statsmodels
 pmdarima
 jupyter
+
+Sind wahrscheinlich wichtig (stand 4.Mai) 
+.gitignore — diese Einträge sind für Python-Projekte wichtig:
+__pycache__/
+.ipynb_checkpoints/
+venv/
+.env
+*.pyc
