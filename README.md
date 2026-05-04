@@ -14,6 +14,18 @@ ToDo: was noch gemacht werden muss
 src: notwendige Python funktionen 
 aufgabenstellung: unsere Project eckdaten 
 
+**Wie klont man dieses Respiratory lokal ?**
+
+1. Geh auf GitHub zum Repository
+2. Klick auf den grünen Button Code
+3. Wähl den Reiter SSH
+4. Kopier die Adresse — sie sieht so aus:
+  git@github.com:IhrBenutzername/IhrRepository.git
+5. im Terminal folgenden Befehl ausführen:
+  bashgit clone git@github.com:IhrBenutzername/IhrRepository.git
+6. Danach in den Ordner wechseln:
+  bashcd IhrRepository
+
 
 **Datenaufteilung:**
 Clara -  Temperatur, Jonas - Luftdruck, Kenia - Wind
