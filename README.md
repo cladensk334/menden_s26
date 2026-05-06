@@ -17,6 +17,7 @@ Alle Ergebnisse werden in einem professionellen Git-Repository dokumentiert und 
 ## Projekt Überblick
 Wir analysieren Wetterdaten des Deutschen Wetterdienstes (DWD).
 Die Daten wurden von der offiziellen DWD-Website bezogen: https://www.dwd.de/DE/leistungen/cdc/cdc_ueberblick-klimadaten.html
+Präsentation: https://canva.link/5pkqlfakx89zx7t
 
 **Kurs:** Zeitreiheanalyse  
 **Gruppen Mitglieder:** Clara Denecke, Jonas Müller, Kenia Eguez  
