@@ -1,14 +1,22 @@
 Hier werden notwenidge python funktionen aufgeführt
 
-Werden wahrscheinlich benutzt (stand 4.Mai)
+Werden wahrscheinlich benutzt (stand 11.Mai)
 pandas
 numpy
 matplotlib
 statsmodels
 pmdarima
 jupyter
+io
+re
+zipfile
+requests
+statsmodels.tsa.stattools, adfuller, kpss
+statsmodels.graphics.tsaplots, plot_acf, plot_pacf
+statsmodels.tsa.arima.model, ARIMA
 
-Sind wahrscheinlich wichtig (stand 4.Mai) 
+
+Sind wahrscheinlich wichtig (stand 11.Mai) 
 .gitignore — diese Einträge sind für Python-Projekte wichtig:
 __pycache__/
 .ipynb_checkpoints/
