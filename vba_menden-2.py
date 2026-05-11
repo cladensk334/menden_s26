@@ -79,7 +79,9 @@ plot_pacf(wind_diff, lags=40, ax=axes[1],
 plt.tight_layout()
 plt.show()
 
+# ============================================================
 # SCHRITT 4C: ARIMA MODELLSELEKTION (Grid Search) – Wind (FM)
+# ============================================================
 
 from itertools import product
 from statsmodels.tsa.arima.model import ARIMA
@@ -87,41 +89,25 @@ import pandas as pd
 import warnings
 warnings.filterwarnings("ignore")
 
-print("=== Grid Search ARIMA(p, d, q) ===\n")
-print("Suche über p ∈ {0,1,2,3}, d ∈ {0,1}, q ∈ {0,1,2,3}...\n")
-
 results = []
 
 for p, d, q in product(range(4), [1], range(4)):
     try:
         model = ARIMA(wind_clean, order=(p, d, q))
-        fit = model.fit()
+        fit   = model.fit()
         results.append({
-            "Ordnung (p,d,q)": f"({p},{d},{q})",
-            "AIC": round(fit.aic, 2),
-            "BIC": round(fit.bic, 2),
-            "HQIC": round(fit.hqic, 2)
+            "Modell":    f"ARIMA({p},{d},{q})",
+            "AIC":       round(fit.aic,  2),
+            "SC":        round(fit.bic,  2),
+            "HQ":        round(fit.hqic, 2)
         })
     except Exception:
         continue
 
-# Nach AIC sortieren
-results_df = pd.DataFrame(results).sort_values("AIC").reset_index(drop=True)
+results_df = pd.DataFrame(results).sort_values("SC").reset_index(drop=True)
 
-print("=== Top 10 Modelle nach AIC ===\n")
-print(results_df.head(10).to_string(index=False))
-
-best_order_str = results_df.iloc[0]["Ordnung (p,d,q)"]
-print(f"\n→ Bestes Modell nach AIC: ARIMA{best_order_str}")
-
-"""AIC - AIC Akaike Information Criterion, SC - BIC Schwarz Criterion (= Bayesian Information Criterion), HQ - HQIC Hannan-Quinn Information Criterion
-
-ARIMA(3, 1, 2) bedeutet:
-
-p = 3 → Das Modell nutzt die letzten 3 Tage als Eingabe (AR-Teil)
-d = 1 → Die Reihe wurde einmal differenziert (Trend entfernt)
-q = 2 → Die letzten 2 Vorhersagefehler werden korrigiert (MA-Teil)
-"""
+print("=== Grid Search Ergebnisse (sortiert nach SC) ===\n")
+print(results_df.to_string(index=False))
 
 # SCHRITT 4D: MODELL SCHÄTZEN & DIAGNOSTIK – Wind (FM)
 
@@ -150,23 +136,6 @@ for name in fit.params.index:
     print(f"{name:<15} {fit.params[name]:>10.4f} {fit.tvalues[name]:>12.4f} {p_val:>10.4f} {sig:>12}")
 print("\nSignifikanzniveaus: * p<0.1  ** p<0.05  *** p<0.01")
 
-# ── Residualdiagnostik ───────────────────────────────────────
-residuals = pd.Series(fit.resid).dropna()
-
-fig, axes = plt.subplots(1, 3, figsize=(16, 4))
-
-axes[0].plot(residuals, linewidth=0.5, color="steelblue")
-axes[0].axhline(0, color="tomato", linestyle="--", linewidth=0.8)
-axes[0].set_title("Residuen über Zeit")
-
-plot_acf(residuals, lags=30, ax=axes[1], title="ACF der Residuen")
-
-axes[2].hist(residuals, bins=40, color="steelblue",
-             alpha=0.7, edgecolor="white")
-axes[2].set_title("Verteilung der Residuen")
-
-plt.tight_layout()
-plt.show()
 
 # ── Ljung-Box Test ───────────────────────────────────────────
 lb = acorr_ljungbox(residuals, lags=[10, 20, 30], return_df=True)
