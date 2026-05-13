@@ -13,8 +13,10 @@ import os
 import numpy as np
 import pandas as pd
 
-EINGABE  = os.path.join("data", "luftdruck_roh.csv")
-AUSGABE  = os.path.join("data", "luftdruck_bereinigt.csv")
+EINGABE       = os.path.join("data", "processed", "luftdruck_roh.csv")
+AUSGABE       = os.path.join("data", "processed", "luftdruck_bereinigt.csv")
+AUSGABE_TRAIN = os.path.join("data", "processed", "luftdruck_train.csv")
+AUSGABE_TEST  = os.path.join("data", "processed", "luftdruck_test.csv")
 
 print("=" * 60)
 print("SCHRITT 2: DATENBEREINIGUNG")
@@ -72,10 +74,28 @@ print(f"\n  [4] Monatliche Mittelwerte: {len(ts_monthly)} Werte berechnet")
 
 # --- Bereinigten Datensatz speichern ----------------------------------------
 ts.name = "PP_TER"
-df_out = ts.to_frame()
-df_out["PP_TER_monatlich"] = ts.resample("D").asfreq().map(
-    ts_monthly.reindex(ts.index, method="ffill")
-)
 ts.to_csv(AUSGABE, header=True)
 print(f"\n  Bereinigte Daten gespeichert: {AUSGABE}")
+
+# --- 5. Train/Test-Split (70/30) ---------------------------------------------
+print(f"\n  [5] Train/Test-Split (70 / 30)")
+SPLIT_RATIO = 0.70
+n_gesamt    = len(ts)
+n_train     = int(n_gesamt * SPLIT_RATIO)
+n_test      = n_gesamt - n_train
+
+ts_train = ts.iloc[:n_train]
+ts_test  = ts.iloc[n_train:]
+
+print(f"      Gesamtbeobachtungen : {n_gesamt:,} Tage")
+print(f"      Trainingsdaten      : {n_train:,} Tage  "
+      f"({ts_train.index[0].date()} – {ts_train.index[-1].date()})")
+print(f"      Testdaten           : {n_test:,} Tage  "
+      f"({ts_test.index[0].date()}  – {ts_test.index[-1].date()})")
+print(f"      Tatsaechlicher Split : {n_train/n_gesamt*100:.1f}% / {n_test/n_gesamt*100:.1f}%")
+
+ts_train.to_csv(AUSGABE_TRAIN, header=True)
+ts_test.to_csv(AUSGABE_TEST,  header=True)
+print(f"\n      Trainingsdaten gespeichert : {AUSGABE_TRAIN}")
+print(f"      Testdaten gespeichert      : {AUSGABE_TEST}")
 print("=" * 60)
