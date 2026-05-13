@@ -29,10 +29,15 @@ import pandas as pd
 from statsmodels.tsa.stattools import adfuller, kpss, acf, pacf
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.stats.diagnostic import acorr_ljungbox
+from sklearn.model_selection import TimeSeriesSplit
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 from scipy import stats
 
-EINGABE  = os.path.join("data", "luftdruck_bereinigt.csv")
-AUSGABE  = os.path.join("data", "prognose.csv")
+EINGABE       = os.path.join("data", "processed", "luftdruck_bereinigt.csv")
+EINGABE_TRAIN = os.path.join("data", "processed", "luftdruck_train.csv")
+EINGABE_TEST  = os.path.join("data", "processed", "luftdruck_test.csv")
+AUSGABE       = os.path.join("data", "processed", "prognose.csv")
+AUSGABE_EVAL  = os.path.join("data", "processed", "modell_evaluation.csv")
 
 # --- Daten laden -------------------------------------------------------------
 ts = pd.read_csv(EINGABE, index_col=0, parse_dates=True).squeeze()
@@ -318,6 +323,125 @@ prog_df.to_csv(AUSGABE, index=False)
 print(f"\n  Prognose gespeichert: {AUSGABE}")
 
 # =============================================================================
+# SCHRITT 8: TRAIN/TEST-SPLIT & MODELL-EVALUATION (MSE, RMSE, MAE, MAPE)
+# =============================================================================
+print("\n" + "=" * 65)
+print("SCHRITT 8: MODELL-EVALUATION – TRAIN/TEST-SPLIT (70/30)")
+print("=" * 65)
+
+ts_train = pd.read_csv(EINGABE_TRAIN, index_col=0, parse_dates=True).squeeze()
+ts_test  = pd.read_csv(EINGABE_TEST,  index_col=0, parse_dates=True).squeeze()
+ts_train.index.freq = "D"
+ts_test.index.freq  = "D"
+
+print(f"\n  Trainingsdaten : {len(ts_train):,} Tage  "
+      f"({ts_train.index[0].date()} – {ts_train.index[-1].date()})")
+print(f"  Testdaten      : {len(ts_test):,} Tage  "
+      f"({ts_test.index[0].date()} – {ts_test.index[-1].date()})")
+
+# Modell auf Trainingsdaten fitten
+print(f"\n  Schaetze ARIMA({p_final},{d_final},{q_final}) auf Trainingsdaten ...")
+fit_train = ARIMA(ts_train, order=(p_final, d_final, q_final)).fit()
+
+# Multi-Step-Prognose fuer den gesamten Testzeitraum
+fc_obj    = fit_train.get_forecast(steps=len(ts_test))
+fc_werte  = fc_obj.predicted_mean
+fc_werte.index = ts_test.index
+
+# Evaluationsmetriken
+mse_test  = mean_squared_error(ts_test, fc_werte)
+rmse_test = np.sqrt(mse_test)
+mae_test  = mean_absolute_error(ts_test, fc_werte)
+mape_test = np.mean(np.abs((ts_test.values - fc_werte.values) / ts_test.values)) * 100
+
+print(f"\n  --- Test-Set-Metriken (Multi-Step-Prognose) ---")
+print(f"  {'Metrik':<8}  {'Wert':>12}  {'Einheit'}")
+print("  " + "-" * 38)
+print(f"  {'MSE':<8}  {mse_test:>12.4f}  hPa^2")
+print(f"  {'RMSE':<8}  {rmse_test:>12.4f}  hPa")
+print(f"  {'MAE':<8}  {mae_test:>12.4f}  hPa")
+print(f"  {'MAPE':<8}  {mape_test:>12.4f}  %")
+print(
+    "\n  Interpretation:\n"
+    "  - MSE  : mittlerer quadratischer Fehler (bestraft grosse Abweichungen stark)\n"
+    "  - RMSE : Wurzel des MSE, in derselben Einheit wie die Zeitreihe (hPa)\n"
+    "  - MAE  : mittlerer absoluter Fehler, robuster gegenueber Ausreissern\n"
+    "  - MAPE : prozentualer Fehler, erlaubt skalierungsunabhaengigen Vergleich\n"
+)
+
+# =============================================================================
+# SCHRITT 9: TIME-SERIES-CROSS-VALIDATION (5-Fold, rollierendes Fenster)
+# =============================================================================
+print("\n" + "=" * 65)
+print("SCHRITT 9: TIME-SERIES-CROSS-VALIDATION (5-Fold)")
+print("=" * 65)
+
+CV_FENSTER  = 730   # letzten 2 Jahre der Trainingsdaten als CV-Pool
+CV_TESTSIZE = 30    # Tage pro Fold
+N_SPLITS    = 5
+
+ts_cv = ts_train.iloc[-CV_FENSTER:]
+tscv  = TimeSeriesSplit(n_splits=N_SPLITS, test_size=CV_TESTSIZE)
+
+print(f"\n  Methode    : TimeSeriesSplit (expandierendes Fenster)")
+print(f"  CV-Pool    : letzte {CV_FENSTER} Tage der Trainingsdaten")
+print(f"  Fold-Groesse: {CV_TESTSIZE} Tage pro Test-Fold")
+print(f"  Anzahl Folds: {N_SPLITS}\n")
+
+fold_metriken = []
+print(f"  {'Fold':<6} {'Train-Obs':>10} {'MSE':>10} {'RMSE':>10} {'MAE':>10} {'MAPE (%)':>10}")
+print("  " + "-" * 60)
+
+for fold, (idx_tr, idx_te) in enumerate(tscv.split(ts_cv)):
+    cv_tr  = ts_cv.iloc[idx_tr]
+    cv_te  = ts_cv.iloc[idx_te]
+    fc_cv  = ARIMA(cv_tr, order=(p_final, d_final, q_final)).fit() \
+                  .get_forecast(steps=len(cv_te)).predicted_mean
+    fc_cv.index = cv_te.index
+
+    mse_cv  = mean_squared_error(cv_te, fc_cv)
+    rmse_cv = np.sqrt(mse_cv)
+    mae_cv  = mean_absolute_error(cv_te, fc_cv)
+    mape_cv = np.mean(np.abs((cv_te.values - fc_cv.values) / cv_te.values)) * 100
+
+    fold_metriken.append({
+        "Fold": fold + 1,
+        "MSE" : round(mse_cv,  4),
+        "RMSE": round(rmse_cv, 4),
+        "MAE" : round(mae_cv,  4),
+        "MAPE": round(mape_cv, 4),
+    })
+    print(f"  {fold+1:<6} {len(cv_tr):>10,} {mse_cv:>10.4f} "
+          f"{rmse_cv:>10.4f} {mae_cv:>10.4f} {mape_cv:>10.4f}")
+
+cv_df = pd.DataFrame(fold_metriken)
+print("  " + "-" * 60)
+print(f"  {'Mittel':<6} {'':>10} "
+      f"{cv_df['MSE'].mean():>10.4f} {cv_df['RMSE'].mean():>10.4f} "
+      f"{cv_df['MAE'].mean():>10.4f} {cv_df['MAPE'].mean():>10.4f}")
+print(f"  {'Std.':<6} {'':>10} "
+      f"{cv_df['MSE'].std():>10.4f} {cv_df['RMSE'].std():>10.4f} "
+      f"{cv_df['MAE'].std():>10.4f} {cv_df['MAPE'].std():>10.4f}")
+
+# Evaluation speichern
+eval_df = pd.DataFrame([{
+    "Quelle": "Test-Set (30%)",
+    "MSE"   : round(mse_test,  4),
+    "RMSE"  : round(rmse_test, 4),
+    "MAE"   : round(mae_test,  4),
+    "MAPE"  : round(mape_test, 4),
+}] + [{"Quelle": f"CV Fold {r['Fold']}", **{k: v for k, v in r.items() if k != "Fold"}}
+      for r in fold_metriken] + [{
+    "Quelle": "CV Mittelwert",
+    "MSE"   : round(cv_df["MSE"].mean(),  4),
+    "RMSE"  : round(cv_df["RMSE"].mean(), 4),
+    "MAE"   : round(cv_df["MAE"].mean(),  4),
+    "MAPE"  : round(cv_df["MAPE"].mean(), 4),
+}])
+eval_df.to_csv(AUSGABE_EVAL, index=False)
+print(f"\n  Evaluationsergebnisse gespeichert: {AUSGABE_EVAL}")
+
+# =============================================================================
 # ZUSAMMENFASSUNG
 # =============================================================================
 print("\n" + "=" * 65)
@@ -333,6 +457,18 @@ print(f"""
   AIC                 : {fit_final.aic:.2f}
   BIC                 : {fit_final.bic:.2f}
   Log-Likelihood      : {fit_final.llf:.2f}
+
+  --- Modellguete (Test-Set 30%) ---
+  MSE   : {mse_test:.4f} hPa^2
+  RMSE  : {rmse_test:.4f} hPa
+  MAE   : {mae_test:.4f} hPa
+  MAPE  : {mape_test:.4f} %
+
+  --- Cross-Validation (5-Fold, Mittelwert) ---
+  MSE   : {cv_df['MSE'].mean():.4f} hPa^2
+  RMSE  : {cv_df['RMSE'].mean():.4f} hPa
+  MAE   : {cv_df['MAE'].mean():.4f} hPa
+  MAPE  : {cv_df['MAPE'].mean():.4f} %
 
   Prognose Wert 1     : {prog_mittel.values[0]:.2f} hPa  (95%-KI: [{prog_ki.iloc[0,0]:.2f}, {prog_ki.iloc[0,1]:.2f}])
   Prognose Wert 10    : {prog_mittel.values[-1]:.2f} hPa  (95%-KI: [{prog_ki.iloc[-1,0]:.2f}, {prog_ki.iloc[-1,1]:.2f}])
