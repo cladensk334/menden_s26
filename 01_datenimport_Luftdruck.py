@@ -12,11 +12,11 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 import os
 import pandas as pd
 
-DATEIPFAD = "Luftdruck Würzburg.txt"
-AUSGABE   = os.path.join("data", "luftdruck_roh.csv")
+DATEIPFAD = os.path.join("data", "raw", "Luftdruck Würzburg.txt")
+AUSGABE   = os.path.join("data", "processed", "luftdruck_roh.csv")
 
 # --- Ausgabeordner anlegen ---------------------------------------------------
-os.makedirs("data", exist_ok=True)
+os.makedirs(os.path.join("data", "processed"), exist_ok=True)
 
 print("=" * 60)
 print("SCHRITT 1: DATENIMPORT")
@@ -67,4 +67,14 @@ print(f"  Maximum              : {ts_daily.max():.2f} hPa")
 # --- Zwischenspeichern (unbereinigt, Lücken als NaN) ------------------------
 ts_daily.to_csv(AUSGABE, header=True)
 print(f"\n  Rohdaten gespeichert : {AUSGABE}")
+
+# --- Hinweis: Train/Test-Split (70/30) ---------------------------------------
+n_gesamt = len(ts_daily)
+n_train  = int(n_gesamt * 0.70)
+n_test   = n_gesamt - n_train
+split_datum = ts_daily.index[n_train].date()
+print(f"\n  Geplanter Train/Test-Split (70/30):")
+print(f"    Trainingsdaten : {n_train:,} Tage  (bis {ts_daily.index[n_train - 1].date()})")
+print(f"    Testdaten      : {n_test:,} Tage  (ab  {split_datum})")
+print(f"    Split wird in 02_datenbereinigung_Luftdruck.py durchgefuehrt.")
 print("=" * 60)

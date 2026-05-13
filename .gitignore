@@ -1,0 +1,18 @@
+# Generierte CSV-Dateien (werden lokal erzeugt, nicht versioniert)
+Data/processed/*.csv
+
+# Plots werden nur im Branch Datenvisualisierung versioniert
+# (Branch-spezifisch per git add gehandhabt)
+
+# Python-Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtuelle Umgebungen
+venv/
+.env/
+
+# OS-Dateien
+.DS_Store
+Thumbs.db
