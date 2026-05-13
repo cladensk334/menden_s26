@@ -9,6 +9,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 import warnings
 warnings.filterwarnings("ignore")
 
+import os
 import matplotlib
 matplotlib.use("Agg")  # nicht-interaktiv: kein Fenster, nur Datei-Output
 import numpy as np
@@ -21,12 +22,16 @@ from statsmodels.tsa.stattools import adfuller, kpss, acf, pacf
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.stats.diagnostic import acorr_ljungbox
+from sklearn.model_selection import TimeSeriesSplit
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 from scipy import stats
 import itertools
 
 plt.rcParams["figure.dpi"] = 120
 plt.rcParams["font.family"] = "DejaVu Sans"
-DATEIPFAD = "Luftdruck Würzburg.txt"
+DATEIPFAD  = os.path.join("data", "raw", "Luftdruck Würzburg.txt")
+PLOTORDNER = "Plots"
+os.makedirs(PLOTORDNER, exist_ok=True)
 
 # =============================================================================
 # 0. DATEN LADEN UND VORVERARBEITEN
@@ -93,7 +98,7 @@ for ax in axes:
     ax.tick_params(axis="x", rotation=45)
 
 plt.tight_layout()
-plt.savefig("01_rohdaten.png", bbox_inches="tight")
+plt.savefig(os.path.join(PLOTORDNER, "01_rohdaten.png"), bbox_inches="tight")
 plt.close()
 print("\n[Abbildung 1 gespeichert: 01_rohdaten.png]")
 
@@ -197,7 +202,7 @@ for ax in axes:
     ax.tick_params(axis="x", rotation=45)
 
 plt.tight_layout()
-plt.savefig("02_transformation.png", bbox_inches="tight")
+plt.savefig(os.path.join(PLOTORDNER, "02_transformation.png"), bbox_inches="tight")
 plt.close()
 print("\n[Abbildung 2 gespeichert: 02_transformation.png]")
 
@@ -226,7 +231,7 @@ axes[1].set_xlabel("Lag (Tage)")
 axes[1].grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("03_acf_pacf.png", bbox_inches="tight")
+plt.savefig(os.path.join(PLOTORDNER, "03_acf_pacf.png"), bbox_inches="tight")
 plt.close()
 print("\n[Abbildung 3 gespeichert: 03_acf_pacf.png]")
 
@@ -412,7 +417,7 @@ ax5.set_xlabel("Lag")
 ax5.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("04_residuenanalyse.png", bbox_inches="tight")
+plt.savefig(os.path.join(PLOTORDNER, "04_residuenanalyse.png"), bbox_inches="tight")
 plt.close()
 print("\n[Abbildung 4 gespeichert: 04_residuenanalyse.png]")
 
@@ -520,9 +525,160 @@ ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=2))
 plt.xticks(rotation=45)
 
 plt.tight_layout()
-plt.savefig("05_prognose.png", bbox_inches="tight")
+plt.savefig(os.path.join(PLOTORDNER, "05_prognose.png"), bbox_inches="tight")
 plt.close()
 print("\n[Abbildung 5 gespeichert: 05_prognose.png]")
+
+# =============================================================================
+# ABSCHNITT 8: TRAIN/TEST-SPLIT (70/30) & MODELL-EVALUATION
+# =============================================================================
+print("\n" + "=" * 65)
+print("ABSCHNITT 8: MODELL-EVALUATION – TRAIN/TEST-SPLIT (70/30)")
+print("=" * 65)
+
+n_train   = int(len(ts) * 0.70)
+ts_train  = ts.iloc[:n_train]
+ts_test   = ts.iloc[n_train:]
+print(f"\n  Trainingsdaten : {len(ts_train):,} Tage  "
+      f"({ts_train.index[0].date()} – {ts_train.index[-1].date()})")
+print(f"  Testdaten      : {len(ts_test):,} Tage  "
+      f"({ts_test.index[0].date()} – {ts_test.index[-1].date()})")
+
+print(f"\n  Schaetze ARIMA({p_final},{d_final},{q_final}) auf Trainingsdaten ...")
+fit_train = ARIMA(ts_train, order=(p_final, d_final, q_final)).fit()
+fc_obj    = fit_train.get_forecast(steps=len(ts_test))
+fc_werte  = fc_obj.predicted_mean
+fc_ki     = fc_obj.conf_int(alpha=0.05)
+fc_werte.index = ts_test.index
+fc_ki.index    = ts_test.index
+
+mse_test  = mean_squared_error(ts_test, fc_werte)
+rmse_test = np.sqrt(mse_test)
+mae_test  = mean_absolute_error(ts_test, fc_werte)
+mape_test = np.mean(np.abs((ts_test.values - fc_werte.values) / ts_test.values)) * 100
+
+print(f"\n  Test-Set-Metriken (Multi-Step-Prognose ueber {len(ts_test):,} Tage):")
+print(f"  {'Metrik':<8}  {'Wert':>12}  Einheit")
+print("  " + "-" * 36)
+print(f"  {'MSE':<8}  {mse_test:>12.4f}  hPa^2")
+print(f"  {'RMSE':<8}  {rmse_test:>12.4f}  hPa")
+print(f"  {'MAE':<8}  {mae_test:>12.4f}  hPa")
+print(f"  {'MAPE':<8}  {mape_test:>12.4f}  %")
+
+# Plot: Train/Test-Split + Evaluation
+fig, axes = plt.subplots(2, 1, figsize=(14, 10))
+
+# Abb. 6a: gesamter Split
+axes[0].plot(ts_train.index, ts_train.values, color="steelblue", lw=0.5,
+             label=f"Trainingsdaten ({len(ts_train):,} Tage, 70%)")
+axes[0].plot(ts_test.index,  ts_test.values,  color="darkorange", lw=0.5,
+             label=f"Testdaten ({len(ts_test):,} Tage, 30%)")
+axes[0].axvline(ts_test.index[0], color="black", ls="--", lw=1.2,
+                label=f"Split: {ts_test.index[0].date()}")
+axes[0].set_title("Train/Test-Split (70/30) – Luftdruck Wuerzburg", fontsize=12)
+axes[0].set_ylabel("Luftdruck [hPa]")
+axes[0].legend(fontsize=9)
+axes[0].grid(True, alpha=0.3)
+axes[0].xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+axes[0].xaxis.set_major_locator(mdates.YearLocator(10))
+axes[0].tick_params(axis="x", rotation=45)
+
+# Abb. 6b: Prognose vs. Ist auf Testdaten (letzte 3 Jahre des Tests)
+n_zoom = min(1095, len(ts_test))
+axes[1].plot(ts_test.iloc[-n_zoom:].index, ts_test.iloc[-n_zoom:].values,
+             color="darkorange", lw=0.8, label="Ist-Werte (Test)")
+axes[1].plot(fc_werte.iloc[-n_zoom:].index, fc_werte.iloc[-n_zoom:].values,
+             color="red", lw=1.0, ls="--", label="Prognose (Multi-Step)")
+axes[1].fill_between(fc_ki.iloc[-n_zoom:].index,
+                     fc_ki.iloc[-n_zoom:, 0], fc_ki.iloc[-n_zoom:, 1],
+                     color="red", alpha=0.10, label="95%-KI")
+axes[1].set_title(
+    f"Test-Evaluation – ARIMA({p_final},{d_final},{q_final})\n"
+    f"MSE={mse_test:.2f}  RMSE={rmse_test:.2f}  MAE={mae_test:.2f}  MAPE={mape_test:.2f}%",
+    fontsize=11
+)
+axes[1].set_ylabel("Luftdruck [hPa]")
+axes[1].legend(fontsize=9)
+axes[1].grid(True, alpha=0.3)
+axes[1].xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+axes[1].xaxis.set_major_locator(mdates.YearLocator(5))
+axes[1].tick_params(axis="x", rotation=45)
+
+plt.tight_layout()
+plt.savefig(os.path.join(PLOTORDNER, "06_train_test_evaluation.png"), bbox_inches="tight")
+plt.close()
+print("\n[Abbildung 6 gespeichert: 06_train_test_evaluation.png]")
+
+# =============================================================================
+# ABSCHNITT 9: TIME-SERIES-CROSS-VALIDATION (5-Fold)
+# =============================================================================
+print("\n" + "=" * 65)
+print("ABSCHNITT 9: TIME-SERIES-CROSS-VALIDATION (5-Fold)")
+print("=" * 65)
+
+CV_FENSTER  = 730
+CV_TESTSIZE = 30
+N_SPLITS    = 5
+ts_cv = ts_train.iloc[-CV_FENSTER:]
+tscv  = TimeSeriesSplit(n_splits=N_SPLITS, test_size=CV_TESTSIZE)
+
+print(f"\n  CV-Pool    : letzte {CV_FENSTER} Tage der Trainingsdaten")
+print(f"  Fold-Groesse: {CV_TESTSIZE} Tage | Anzahl Folds: {N_SPLITS}\n")
+print(f"  {'Fold':<6} {'Train-Obs':>10} {'MSE':>10} {'RMSE':>10} {'MAE':>10} {'MAPE(%)':>10}")
+print("  " + "-" * 60)
+
+fold_metriken = []
+for fold, (idx_tr, idx_te) in enumerate(tscv.split(ts_cv)):
+    cv_tr = ts_cv.iloc[idx_tr]
+    cv_te = ts_cv.iloc[idx_te]
+    fc_cv = ARIMA(cv_tr, order=(p_final, d_final, q_final)).fit() \
+                 .get_forecast(steps=len(cv_te)).predicted_mean
+    fc_cv.index = cv_te.index
+    m = {
+        "Fold": fold + 1,
+        "MSE" : mean_squared_error(cv_te, fc_cv),
+        "RMSE": np.sqrt(mean_squared_error(cv_te, fc_cv)),
+        "MAE" : mean_absolute_error(cv_te, fc_cv),
+        "MAPE": np.mean(np.abs((cv_te.values - fc_cv.values) / cv_te.values)) * 100,
+    }
+    fold_metriken.append(m)
+    print(f"  {m['Fold']:<6} {len(cv_tr):>10,} {m['MSE']:>10.4f} "
+          f"{m['RMSE']:>10.4f} {m['MAE']:>10.4f} {m['MAPE']:>10.4f}")
+
+cv_df = pd.DataFrame(fold_metriken)
+print("  " + "-" * 60)
+print(f"  {'Mittel':<17} {cv_df['MSE'].mean():>10.4f} {cv_df['RMSE'].mean():>10.4f} "
+      f"{cv_df['MAE'].mean():>10.4f} {cv_df['MAPE'].mean():>10.4f}")
+print(f"  {'Std.':<17} {cv_df['MSE'].std():>10.4f} {cv_df['RMSE'].std():>10.4f} "
+      f"{cv_df['MAE'].std():>10.4f} {cv_df['MAPE'].std():>10.4f}")
+
+# CV-Plot: Balkendiagramm der Fold-Metriken
+fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+for ax, (metrik, farbe) in zip(
+    axes.flat,
+    [("MSE","steelblue"),("RMSE","darkorange"),("MAE","seagreen"),("MAPE","tomato")]
+):
+    werte = cv_df[metrik]
+    ax.bar(werte.index + 1, werte.values, color=farbe, alpha=0.8, edgecolor="white")
+    ax.axhline(werte.mean(), color="black", ls="--", lw=1.5,
+               label=f"Mittel: {werte.mean():.3f}")
+    einheit = "%" if metrik == "MAPE" else "hPa^2" if metrik == "MSE" else "hPa"
+    ax.set_title(f"{metrik} [{einheit}]", fontsize=11)
+    ax.set_xlabel("Fold")
+    ax.set_ylabel(einheit)
+    ax.set_xticks(range(1, N_SPLITS + 1))
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3, axis="y")
+
+plt.suptitle(
+    f"5-Fold Time-Series-Cross-Validation – ARIMA({p_final},{d_final},{q_final})\n"
+    f"CV-Fenster: letzte {CV_FENSTER} Trainingstage | {CV_TESTSIZE} Tage/Fold",
+    fontsize=12
+)
+plt.tight_layout()
+plt.savefig(os.path.join(PLOTORDNER, "07_cv_metriken.png"), bbox_inches="tight")
+plt.close()
+print("\n[Abbildung 7 gespeichert: 07_cv_metriken.png]")
 
 # =============================================================================
 # ZUSAMMENFASSUNG
@@ -540,6 +696,18 @@ print(f"""
   AIC                 : {fit_final.aic:.2f}
   BIC                 : {fit_final.bic:.2f}
   Log-Likelihood      : {fit_final.llf:.2f}
+
+  --- Test-Set (30%, {len(ts_test):,} Tage) ---
+  MSE   : {mse_test:.4f} hPa^2
+  RMSE  : {rmse_test:.4f} hPa
+  MAE   : {mae_test:.4f} hPa
+  MAPE  : {mape_test:.4f} %
+
+  --- Cross-Validation (5-Fold, Mittelwert) ---
+  MSE   : {cv_df['MSE'].mean():.4f} hPa^2
+  RMSE  : {cv_df['RMSE'].mean():.4f} hPa
+  MAE   : {cv_df['MAE'].mean():.4f} hPa
+  MAPE  : {cv_df['MAPE'].mean():.4f} %
 
   Prognose (10 Tage)  : {prog_mittel.values[0]:.2f} - {prog_mittel.values[-1]:.2f} hPa
   95%-KI (letzte Prog.): [{prog_ki.iloc[-1, 0]:.2f}, {prog_ki.iloc[-1, 1]:.2f}] hPa
